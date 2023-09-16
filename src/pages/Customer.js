@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 // import NotFound from "../components/NotFound";
 import { baseUrl } from "../shared";
 
@@ -7,7 +7,7 @@ export default function Customer () {
     const [customer, setCustomer] = useState();
     const [notFound, setNotFound] = useState(false);
    const {id} = useParams();
-   //const navigate = useNavigate();
+   const navigate = useNavigate();
 
    useEffect(() => {
 
@@ -34,6 +34,8 @@ export default function Customer () {
    },[id])
 
 
+
+
    
 
     return ( 
@@ -48,6 +50,21 @@ export default function Customer () {
     </div>
      ) : <p>No Customer Exist</p>
     }
+    <button onClick={() => {
+        
+      const url = `${baseUrl}/customers/${id}`;
+      fetch(url, {method: "DELETE", headers:{"Content-Type":"application/json"}})
+      .then((response) => {
+        if(!response.ok){
+            throw new Error("Something went wrong")
+        }
+        navigate("/customers");
+      }).catch((e) => {
+        console.log(e)
+      })
+
+    }}>Delete</button>
+    <br/>
     <Link to="/customers">Go Back</Link>
     </>
     );

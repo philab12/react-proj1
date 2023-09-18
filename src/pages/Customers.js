@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { baseUrl } from "../shared";
 import AddCustomer from "../components/AddCustomer";
 
 export default function Customers(){
     const [customers,setCustomers] = useState();
     const [show, setShow] = useState(false);
+    const navigate = useNavigate();
 
     function toggleShow(){
         setShow(!show)
@@ -17,13 +18,17 @@ export default function Customers(){
         fetch(url)
         .then((response) => {
             //console.log(response.status);
+            if(response.status === 401){
+                navigate("/login")
+            }
+            if(!response.ok) throw new Error("Something Went Wrong");
             return response.json()
         })
         .then((data) => {
             setCustomers(data)
         })
-        .catch()
-    },[]);
+        .catch(e => console.log(e.message))
+    },[navigate]);
 
 
 

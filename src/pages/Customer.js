@@ -37,6 +37,10 @@ export default function Customer() {
           setNotFound(true);
         }
 
+       else if(response.status === 401){
+            navigate("/login");
+        }
+
         if (!response.ok)
           throw new Error("Something Went Wrong, try again later");
         // console.log('response',response);
@@ -51,7 +55,7 @@ export default function Customer() {
         setError(e.message);
         //console.log(e.message);
       });
-  }, [id]);
+  }, [id,navigate]);
 
   function updateCustomer(e) {
     e.preventDefault();

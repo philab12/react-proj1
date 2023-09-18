@@ -6,9 +6,11 @@ export default function AddCustomer(props) {
   const [industry, setIndustry] = useState("");
 
 
+  // eslint-disable-next-line
   const [show, setShow] = useState(props.show);
 
   const handleClose = () => setShow(false);
+  // eslint-disable-next-line
   const handleShow = () => setShow(true);
 
   return (
